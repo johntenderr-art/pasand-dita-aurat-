@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person</title>
+    <style>
+        body {
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
+            height: 100vh; background-color: #ffeef2; font-family: 'Poppins', sans-serif;
+            overflow: hidden; text-align: center;
+        }
+        .container {
+            background: white; padding: 30px; border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 10; width: 90%; max-width: 450px;
+        }
+        #gif-main { width: 180px; transition: all 0.3s ease; }
+        h1 { color: #ff4d6d; font-size: 22px; margin: 15px 0; min-height: 60px; }
+        .buttons { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+        button {
+            padding: 12px 25px; font-size: 18px; border: none; border-radius: 12px;
+            cursor: pointer; transition: all 0.3s ease; font-weight: bold;
+        }
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #6c757d; color: white; position: relative; }
+        .heart { position: absolute; color: #ff4d6d; font-size: 20px; animation: float 4s infinite linear; opacity: 0; }
+        @keyframes float { 0% { transform: translateY(100vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img id="gif-main" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1MGdzYWV0eHh3ZnF2ZndrZzF1amZ3Ym9wZHF2ZndrZzF1amZ3YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif">
+        <h1 id="question">Will you be my Valentine? ❤️</h1>
+        <div class="buttons" id="btnWrapper">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const gif = document.getElementById('gif-main');
+
+        let noCount = 0;
+        const shayaris = [
+            "Are you sure? 🥺",
+            "Ek baar aur soch lo... 🌹",
+            "Dil todne mein maza aa raha hai? 💔",
+            "Main rone lagunga... 😭",
+            "Itni berukhi achi nahi hoti! 🥀",
+            "Manjao na, please? ✨",
+            "Ab bas bhi karo, 'Yes' keh do! ❤️"
+        ];
+
+        noBtn.addEventListener('mouseover', () => {
+            // Move the button
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+
+            // Change the text (Shayari/Plea)
+            if (noCount < shayaris.length) {
+                question.innerHTML = shayaris[noCount];
+                noCount++;
+            }
+            
+            // Make the 'Yes' button bigger every time she tries to click 'No'
+            const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize + 2) + 'px';
+            yesBtn.style.padding = (parseFloat(window.getComputedStyle(yesBtn).padding) + 2) + 'px';
+        });
+
+        yesBtn.addEventListener('click', () => {
+            question.innerHTML = "I knew you'd say Yes! You're my everything. ❤️✨";
+            gif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1MGdzYWV0eHh3ZnF2ZndrZzF1amZ3Ym9wZHF2ZndrZzF1amZ3YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbZYp-dU8tLyGE/giphy.gif";
+            document.getElementById('btnWrapper').style.display = 'none';
+            setInterval(createHeart, 150);
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+    </script>
+</body>
+</html>
